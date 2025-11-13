@@ -1,0 +1,26 @@
+class Solution:
+    def validTree(self, n, edges):
+        # A valid tree must have exactly n - 1 edges
+        if len(edges) != n - 1:
+            return False
+
+        # Build adjacency list
+        adjacency_list = [[] for _ in range(n)]
+        for u, v in edges:
+            adjacency_list[u].append(v)
+            adjacency_list[v].append(u)
+
+        # DFS using stack
+        stack = [0]
+        visited = set([0])
+
+        while stack:
+            node = stack.pop()
+            for neighbor in adjacency_list[node]:
+                if neighbor in visited:
+                    continue
+                visited.add(neighbor)
+                stack.append(neighbor)
+
+        # A valid tree must be fully connected
+        return len(visited) == n
